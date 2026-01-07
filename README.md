@@ -134,3 +134,11 @@ Every week:
 - Streak visualization
 
 - Weekly stats
+
+---
+
+## 💡 Author
+
+Aditya Upadhyaya
+
+GitHub: [123-Aditya](https://github.com/123-Aditya)
