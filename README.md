@@ -60,3 +60,19 @@ Streak tracking
 Skip rules (holidays, weekends)
 
 Notes (optional)
+
+---
+
+🔁 Weekly Email Summary (Key Feature)
+
+Every week:
+
+% consistency per habit
+
+Current streak
+
+Longest streak
+
+Missed days
+
+Motivation message 😄
