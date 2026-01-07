@@ -1,6 +1,6 @@
 # 🪴 HabitOS
 
-Docker and Kubernetes related notes and learning projects will be included as part of this repository.
+HabitOS is a cool application (so cool 😎) which helps user to track all the habits he wants to track and provides weekly reports of progress via email.
 
 ---
 
@@ -10,27 +10,27 @@ I'll build it in phases so I don’t get overwhelmed 👀
 
 Tech stack:
 
-Backend: Spring Boot
+- Backend: Spring Boot
 
-Frontend: Angular
+- Frontend: Angular
 
-DB: PostgreSQL
+- DB: PostgreSQL
 
-Auth: JWT
+- Auth: JWT
 
-Scheduling: Spring Scheduler
+- Scheduling: Spring Scheduler
 
-Email: Spring Mail
+- Email: Spring Mail
 
-Caching: Redis (later)
+- Caching: Redis (later)
 
-Docker: Later (final phase)
+- Docker: Later (final phase)
 
 ---
 
 📌 Core Features (Backend-first)
 
-1️⃣ Habits I Can Track
+🧪 Habits I Can Track
 
 I’ll be able to track habits like:
 
@@ -48,18 +48,18 @@ I’ll be able to track habits like:
 
 📖 Reading
 
-🧘 Meditation
+🧘 Meditation ... and many more
 
 
 Each habit will support:
 
-Daily / Weekly frequency
+- Daily / Weekly frequency
 
-Streak tracking
+- Streak tracking
 
-Skip rules (holidays, weekends)
+- Skip rules (holidays, weekends)
 
-Notes (optional)
+- Notes (optional)
 
 ---
 
@@ -67,12 +67,70 @@ Notes (optional)
 
 Every week:
 
-% consistency per habit
+- % consistency per habit
 
-Current streak
+- Current streak
 
-Longest streak
+- Longest streak
 
-Missed days
+- Missed days
 
-Motivation message 😄
+- Motivation message 😄
+
+---
+
+🧠 Backend Modules Breakdown
+
+✅ Phase 1: Core Backend
+
+- Spring Boot project
+
+- User registration & login (JWT)
+
+- Habit CRUD
+
+- Habit entry logging
+
+- Skip rule support
+
+- Streak calculation
+
+⏰ Phase 2: Scheduler + Email
+
+- Weekly cron job
+
+- Aggregate habit stats
+
+- Send email
+
+⚡ Phase 3: Caching (Redis)
+
+- Cache habit stats
+
+- Cache streaks
+
+- Evict cache on new entry
+
+🧪 Phase 4: Testing
+
+- Unit tests (Service layer)
+
+- Integration tests (Postgres Testcontainers)
+
+🐳 Phase 5: Dockerization
+
+- Backend Dockerfile
+
+- PostgreSQL container
+
+- docker-compose
+
+🌐 Phase 6: Angular Frontend
+
+- Dashboard
+
+- Habit calendar
+
+- Streak visualization
+
+- Weekly stats
