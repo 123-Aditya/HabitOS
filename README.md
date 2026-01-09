@@ -133,10 +133,17 @@ Every week:
 
 - Streak visualization
 
-- Weekly stats
+- Weekly statistics
 
 ---
 
+Areas of improvement
+
+- Can we send messages also along with mails?
+
+- 
+
+---
 ## 💡 Author
 
 Aditya Upadhyaya
