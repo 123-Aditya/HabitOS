@@ -1,4 +1,4 @@
-package com.habit.tracker.user;
+package com.habit.tracker.common;
 
 import java.time.LocalDateTime;
 
