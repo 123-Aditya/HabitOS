@@ -4,6 +4,7 @@ import com.habit.tracker.habit.dto.CreateHabitRequest;
 import com.habit.tracker.habit.dto.HabitResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,18 +16,26 @@ public class HabitController {
 
     private final HabitService habitService;
 
-    // TEMP: Replace with JWT extraction later
-    private final String DEMO_USER_EMAIL = "aditya@test.com";
-
     @PostMapping
     public HabitResponse createHabit(
             @Valid @RequestBody CreateHabitRequest request) {
-        return habitService.createHabit(request, DEMO_USER_EMAIL);
+
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
+        return habitService.createHabit(request, email);
     }
 
     @GetMapping
     public List<HabitResponse> getMyHabits() {
-        return habitService.getMyHabits(DEMO_USER_EMAIL);
+
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
+        return habitService.getMyHabits(email);
     }
 }
-
