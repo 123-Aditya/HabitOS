@@ -4,6 +4,7 @@ import com.habit.tracker.entry.HabitEntry;
 import com.habit.tracker.entry.HabitEntryRepository;
 import com.habit.tracker.entry.HabitEntryStatus;
 import com.habit.tracker.habit.Habit;
+import com.habit.tracker.skip.HabitSkipRuleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -14,6 +15,9 @@ import java.util.List;
 public class HabitStreakService {
 
     private final HabitEntryRepository entryRepository;
+    
+    private final HabitSkipRuleRepository skipRuleRepository;
+
 
     public HabitStreak calculateStreak(Habit habit) {
 
@@ -32,10 +36,27 @@ public class HabitStreakService {
                 continue;
             }
 
-            // Missing day → break
             if (!entry.getEntryDate().equals(expectedDate)) {
+
+                boolean isSkipped = skipRuleRepository
+                        .existsByHabitAndDayOfWeek(
+                            habit,
+                            expectedDate.getDayOfWeek()
+                        )
+                    || skipRuleRepository
+                        .existsByHabitAndSpecificDate(
+                            habit,
+                            expectedDate
+                        );
+
+                if (isSkipped) {
+                    expectedDate = expectedDate.minusDays(1);
+                    continue;
+                }
+
                 break;
             }
+
 
             if (entry.getStatus() == HabitEntryStatus.DONE) {
                 tempStreak++;
