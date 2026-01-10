@@ -7,8 +7,8 @@ import com.habit.tracker.habit.HabitRepository;
 import com.habit.tracker.user.User;
 import com.habit.tracker.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +18,10 @@ public class HabitEntryService {
     private final HabitRepository habitRepository;
     private final UserRepository userRepository;
 
+    @CacheEvict(
+    	    value = "habit-streak",
+    	    key = "#request.habitId"
+    	)
     public HabitEntryResponse logHabit(
             LogHabitRequest request,
             String userEmail) {

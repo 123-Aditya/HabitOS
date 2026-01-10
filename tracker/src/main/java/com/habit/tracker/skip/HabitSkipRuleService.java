@@ -7,6 +7,8 @@ import com.habit.tracker.skip.dto.SkipRuleResponse;
 import com.habit.tracker.user.User;
 import com.habit.tracker.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +19,10 @@ public class HabitSkipRuleService {
     private final HabitSkipRuleRepository skipRuleRepository;
     private final UserRepository userRepository;
 
+    @CacheEvict(
+    	    value = "habit-streak",
+    	    key = "#request.habitId"
+    	)
     public SkipRuleResponse createSkipRule(
             CreateSkipRuleRequest request,
             String userEmail) {

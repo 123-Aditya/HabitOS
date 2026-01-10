@@ -6,6 +6,8 @@ import com.habit.tracker.entry.HabitEntryStatus;
 import com.habit.tracker.habit.Habit;
 import com.habit.tracker.skip.HabitSkipRuleRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +20,10 @@ public class HabitStreakService {
     
     private final HabitSkipRuleRepository skipRuleRepository;
 
-
+    @Cacheable(
+    	    value = "habit-streak",
+    	    key = "#habit.id"
+    	)
     public HabitStreak calculateStreak(Habit habit) {
 
         List<HabitEntry> entries =
