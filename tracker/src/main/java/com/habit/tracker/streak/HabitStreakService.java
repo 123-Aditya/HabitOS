@@ -1,12 +1,14 @@
 package com.habit.tracker.streak;
 
 import com.habit.tracker.entry.HabitEntry;
+import com.habit.tracker.entry.HabitEntryController;
 import com.habit.tracker.entry.HabitEntryRepository;
 import com.habit.tracker.entry.HabitEntryStatus;
 import com.habit.tracker.habit.Habit;
 import com.habit.tracker.skip.HabitSkipRuleRepository;
 import lombok.RequiredArgsConstructor;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -19,12 +21,16 @@ public class HabitStreakService {
     private final HabitEntryRepository entryRepository;
     
     private final HabitSkipRuleRepository skipRuleRepository;
+    
+    private static final Logger LOG = LoggerFactory.getLogger(HabitStreakService.class);
 
     @Cacheable(
     	    value = "habit-streak",
     	    key = "#habit.id"
     	)
     public HabitStreak calculateStreak(Habit habit) {
+    	
+    	LOG.info("Calculating streak for habitId={}", habit.getId());
 
         List<HabitEntry> entries =
                 entryRepository.findByHabitOrderByEntryDateDesc(habit);

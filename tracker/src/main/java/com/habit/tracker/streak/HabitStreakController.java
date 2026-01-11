@@ -22,7 +22,7 @@ public class HabitStreakController {
     @GetMapping("/{habitId}")
     public HabitStreakResponse getStreak(@PathVariable Long habitId) {
     	
-    	LOG.info("Fetching habit with id: {habitId}...");
+    	LOG.info("Fetching habit with id: {}...", habitId);
 
         String email = SecurityContextHolder
                 .getContext()
