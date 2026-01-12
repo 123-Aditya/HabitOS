@@ -137,6 +137,39 @@ Every week:
 
 ---
 
+## 🧠 Features and Logic
+
+🔁 Weekly Email Summary (Key Feature)
+
+Every week:
+
+% consistency per habit
+
+Current streak
+
+Longest streak
+
+Missed days
+
+Motivation message 😄
+
+🧠 Habit Concepts
+
+Each habit has:
+
+Name (Exercise, GitHub, Reading)
+
+Frequency (DAILY / WEEKLY)
+
+Target (e.g. 5 days/week)
+
+Active flag
+
+Owner (User)
+
+
+---
+
 Areas of improvement
 
 - Can we send messages also along with mails?
