@@ -210,6 +210,30 @@ NO ENTRY → breaks streak
 
 Streak is date-based, not entry-count-based
 
+
+🧠 Skip rules & holidays
+
+This step ensures:
+
+Sundays don’t break work/gym streaks
+
+Public holidays are respected
+
+Users can define custom skip rules
+
+Streak logic becomes real-world accurate
+
+
+🧠 Caching
+
+Use Redis caching for expensive computations
+
+Implement TTL-based cache
+
+Handle cache invalidation correctly
+
+Avoid stale data bugs
+
 ---
 
 Areas of improvement
