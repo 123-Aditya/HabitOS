@@ -186,7 +186,29 @@ Reading time
 
 Pages read
 
+📌  Streak Calculation
 
+We will:
+
+Compute current streak
+
+Compute longest streak
+
+Respect SKIPPED days
+
+Store or cache streaks
+
+🧠 Streak Rules
+
+✅ Definitions
+
+DONE → counts toward streak
+
+SKIPPED → does NOT break streak
+
+NO ENTRY → breaks streak
+
+Streak is date-based, not entry-count-based
 
 ---
 
