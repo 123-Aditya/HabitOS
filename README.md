@@ -167,6 +167,26 @@ Active flag
 
 Owner (User)
 
+🧠 Core Rules
+
+A habit can have only ONE entry per date
+
+Status is explicitly logged (DONE / SKIPPED)
+
+MISSED is inferred (no entry + not skipped)
+
+Entries are immutable for date (no duplicates)
+
+📌 Unique constraint prevents duplicate logs per day
+📌 value allows future habits like:
+
+Work hours
+
+Reading time
+
+Pages read
+
+
 
 ---
 
