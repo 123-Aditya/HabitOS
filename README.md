@@ -243,7 +243,13 @@ Areas of improvement
 - 
 
 ---
-## 💡 Author
+## 💡 Key Findings
+
+  - When using Redis with JSON serialization, cached objects must have either a default constructor or a Jackson creator, otherwise deserialization fails on cache hits.
+  - 
+
+---
+## ✍️ Author
 
 Aditya Upadhyaya
 
