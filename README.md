@@ -153,6 +153,8 @@ Missed days
 
 Motivation message 😄
 
+---
+
 🧠 Habit Concepts
 
 Each habit has:
@@ -222,6 +224,19 @@ Public holidays are respected
 Users can define custom skip rules
 
 Streak logic becomes real-world accurate
+
+
+🧠  Weekly Email Reports
+
+Every week (say Monday 9 AM):
+
+  - Generate weekly analytics for each user
+
+  - Build a clean summary email
+
+  - Send it automatically
+
+  - Reuse your existing analytics logic (VERY important)
 
 
 🧠 Caching
