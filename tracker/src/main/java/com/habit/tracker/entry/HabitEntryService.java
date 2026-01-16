@@ -1,6 +1,8 @@
 package com.habit.tracker.entry;
 
 import com.habit.tracker.entry.dto.LogHabitRequest;
+import com.habit.tracker.exception.BadRequestException;
+import com.habit.tracker.exception.UnauthorizedException;
 import com.habit.tracker.entry.dto.HabitEntryResponse;
 import com.habit.tracker.habit.Habit;
 import com.habit.tracker.habit.HabitRepository;
@@ -33,13 +35,13 @@ public class HabitEntryService {
                 .orElseThrow(() -> new RuntimeException("Habit not found"));
 
         if (!habit.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Unauthorized habit access");
+        	throw new UnauthorizedException("Unauthorized habit access");
         }
 
         entryRepository.findByHabitAndEntryDate(
                 habit, request.getDate()
         ).ifPresent(e -> {
-            throw new RuntimeException(
+        	throw new BadRequestException(
                     "Habit already logged for this date");
         });
 
