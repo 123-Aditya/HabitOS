@@ -2,6 +2,7 @@ package com.habit.tracker.entry;
 
 import com.habit.tracker.entry.dto.LogHabitRequest;
 import com.habit.tracker.exception.BadRequestException;
+import com.habit.tracker.exception.ResourceNotFoundException;
 import com.habit.tracker.exception.UnauthorizedException;
 import com.habit.tracker.entry.dto.HabitEntryResponse;
 import com.habit.tracker.habit.Habit;
@@ -29,10 +30,10 @@ public class HabitEntryService {
             String userEmail) {
 
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Habit habit = habitRepository.findById(request.getHabitId())
-                .orElseThrow(() -> new RuntimeException("Habit not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Habit not found"));
 
         if (!habit.getUser().getId().equals(user.getId())) {
         	throw new UnauthorizedException("Unauthorized habit access");
