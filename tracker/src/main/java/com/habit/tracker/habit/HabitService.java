@@ -1,5 +1,6 @@
 package com.habit.tracker.habit;
 
+import com.habit.tracker.exception.ResourceNotFoundException;
 import com.habit.tracker.habit.dto.CreateHabitRequest;
 import com.habit.tracker.habit.dto.HabitResponse;
 import com.habit.tracker.user.User;
@@ -18,7 +19,7 @@ public class HabitService {
     public HabitResponse createHabit(CreateHabitRequest request, String userEmail) {
 
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Habit habit = Habit.builder()
                 .name(request.getName())
@@ -37,7 +38,7 @@ public class HabitService {
     public List<HabitResponse> getMyHabits(String userEmail) {
 
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return habitRepository.findByUserAndActiveTrue(user)
                 .stream()

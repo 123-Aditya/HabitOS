@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.habit.tracker.auth.dto.AuthResponse;
 import com.habit.tracker.auth.dto.LoginRequest;
 import com.habit.tracker.auth.dto.RegisterRequest;
+import com.habit.tracker.exception.BadRequestException;
 import com.habit.tracker.exception.UnauthorizedException;
 import com.habit.tracker.user.User;
 import com.habit.tracker.user.UserRepository;
@@ -20,7 +21,7 @@ public class AuthService {
 
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already registered");
+            throw new BadRequestException("Email already registered");
         }
 
         User user = User.builder()

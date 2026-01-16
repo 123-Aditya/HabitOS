@@ -1,7 +1,6 @@
 package com.habit.tracker.streak;
 
 import com.habit.tracker.entry.HabitEntry;
-import com.habit.tracker.entry.HabitEntryController;
 import com.habit.tracker.entry.HabitEntryRepository;
 import com.habit.tracker.entry.HabitEntryStatus;
 import com.habit.tracker.habit.Habit;
