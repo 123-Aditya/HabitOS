@@ -1,5 +1,8 @@
 package com.habit.tracker.skip;
 
+import com.habit.tracker.exception.BadRequestException;
+import com.habit.tracker.exception.ResourceNotFoundException;
+import com.habit.tracker.exception.UnauthorizedException;
 import com.habit.tracker.habit.Habit;
 import com.habit.tracker.habit.HabitRepository;
 import com.habit.tracker.skip.dto.CreateSkipRuleRequest;
@@ -7,7 +10,6 @@ import com.habit.tracker.skip.dto.SkipRuleResponse;
 import com.habit.tracker.user.User;
 import com.habit.tracker.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
@@ -29,29 +31,29 @@ public class HabitSkipRuleService {
 
         if (request.getDayOfWeek() == null &&
             request.getSpecificDate() == null) {
-            throw new RuntimeException("Invalid skip rule");
+            throw new BadRequestException("Invalid skip rule");
         }
 
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Habit habit = habitRepository.findById(request.getHabitId())
-                .orElseThrow(() -> new RuntimeException("Habit not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Habit not found"));
 
         if (!habit.getUser().getId().equals(user.getId())) {
-            throw new RuntimeException("Unauthorized");
+            throw new UnauthorizedException("Unauthorized");
         }
 
         if (request.getDayOfWeek() != null &&
             skipRuleRepository.existsByHabitAndDayOfWeek(
                     habit, request.getDayOfWeek())) {
-            throw new RuntimeException("Skip rule already exists");
+            throw new BadRequestException("Skip rule already exists");
         }
 
         if (request.getSpecificDate() != null &&
             skipRuleRepository.existsByHabitAndSpecificDate(
                     habit, request.getSpecificDate())) {
-            throw new RuntimeException("Skip rule already exists");
+            throw new BadRequestException("Skip rule already exists");
         }
 
         HabitSkipRule rule = HabitSkipRule.builder()
