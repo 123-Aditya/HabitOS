@@ -2,6 +2,7 @@ package com.habit.tracker.analytics;
 
 import com.habit.tracker.analytics.dto.*;
 import com.habit.tracker.entry.*;
+import com.habit.tracker.exception.ResourceNotFoundException;
 import com.habit.tracker.habit.*;
 import com.habit.tracker.skip.HabitSkipRuleRepository;
 import com.habit.tracker.streak.*;
@@ -26,7 +27,7 @@ public class AnalyticsService {
             AnalyticsPeriod period) {
 
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         LocalDate end = LocalDate.now();
         LocalDate start = (period == AnalyticsPeriod.WEEKLY)
@@ -47,8 +48,10 @@ public class AnalyticsService {
                         entryRepository.findByHabitAndEntryDate(habit, date);
 
                 if (entry.isPresent()) {
-                    if (entry.get().getStatus() == HabitEntryStatus.DONE) done++;
-                    if (entry.get().getStatus() == HabitEntryStatus.SKIPPED) skipped++;
+                    if (entry.get().getStatus() == HabitEntryStatus.DONE) 
+                    	done++;
+                    if (entry.get().getStatus() == HabitEntryStatus.SKIPPED) 
+                    	skipped++;
                 } else {
                     boolean isSkipDay =
                             skipRuleRepository.existsByHabitAndDayOfWeek(
@@ -56,7 +59,8 @@ public class AnalyticsService {
                             skipRuleRepository.existsByHabitAndSpecificDate(
                                     habit, date);
 
-                    if (!isSkipDay) missed++;
+                    if (!isSkipDay) 
+                    	missed++;
                 }
             }
 
