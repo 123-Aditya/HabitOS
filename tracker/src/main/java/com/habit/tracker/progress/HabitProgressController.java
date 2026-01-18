@@ -17,17 +17,18 @@ public class HabitProgressController {
 
     @GetMapping("/{habitId}/progress")
     public HabitProgressResponse getHabitProgress(
-            @PathVariable Long habitId) {
-    	
-    	log.info("Fetching progress for habit {}", habitId);
+            @PathVariable Long habitId,
+            @RequestParam(required = false) String from,
+            @RequestParam(required = false) String to) {
 
         String email = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getName();
 
-        return progressService.getProgress(habitId, email);
+        return progressService.getProgress(habitId, email, from, to);
     }
+
     
     
     @GetMapping("/progress")
@@ -46,15 +47,18 @@ public class HabitProgressController {
     // Future Optimizations (When Needed)
     // Batch fetch entries, Batch fetch skip rules, Cache bulk response
     @GetMapping("/progress/bulk")
-    public BulkHabitProgressResponse getAllHabitsProgress() {
+    public BulkHabitProgressResponse getAllHabitsProgress(
+            @RequestParam(required = false) String from,
+            @RequestParam(required = false) String to) {
 
         String email = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getName();
 
-        return progressService.getBulkProgress(email);
+        return progressService.getBulkProgress(email, from, to);
     }
+
 
 }
 

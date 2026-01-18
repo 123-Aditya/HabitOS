@@ -19,26 +19,44 @@ public class HabitProgressService {
     private final HabitEntryRepository entryRepository;
     private final HabitSkipRuleRepository skipRuleRepository;
     private final UserRepository userRepository;
-
+    
     public HabitProgressResponse getProgress(
             Long habitId,
             String userEmail) {
 
+        return getProgress(habitId, userEmail, null, null);
+    }
+
+    public HabitProgressResponse getProgress(
+            Long habitId,
+            String userEmail,
+            String from,
+            String to) {
+
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         Habit habit = habitRepository.findById(habitId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Habit not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Habit not found"));
 
         if (!habit.getUser().getId().equals(user.getId())) {
-            throw new UnauthorizedException(
-                    "You are not allowed to access this habit");
+            throw new UnauthorizedException("Unauthorized access");
         }
 
-        LocalDate start = habit.getCreatedAt().toLocalDate();
-        LocalDate end = LocalDate.now();
+        LocalDate habitStart = habit.getCreatedAt().toLocalDate();
+        LocalDate today = LocalDate.now();
+
+        LocalDate start = parseDate(from, habitStart);
+        LocalDate end = parseDate(to, today);
+
+        // validation
+        if (start.isAfter(end)) {
+            throw new BadRequestException("'from' date cannot be after 'to' date");
+        }
+
+        // clamp range
+        start = start.isBefore(habitStart) ? habitStart : start;
+        end = end.isAfter(today) ? today : end;
 
         List<DailyProgressResponse> progressList = new ArrayList<>();
 
@@ -52,7 +70,7 @@ public class HabitProgressService {
             ProgressStatus status;
 
             if (entry.isPresent()) {
-                status = (entry.get().getStatus() == HabitEntryStatus.DONE)
+                status = entry.get().getStatus() == HabitEntryStatus.DONE
                         ? ProgressStatus.DONE
                         : ProgressStatus.SKIPPED;
             } else {
@@ -83,6 +101,7 @@ public class HabitProgressService {
                 .progress(progressList)
                 .build();
     }
+
     
     public HabitProgressResponse getProgressByName(
             String habitName,
@@ -102,35 +121,46 @@ public class HabitProgressService {
     }
     
     
-    public BulkHabitProgressResponse getBulkProgress(String userEmail) {
+    public BulkHabitProgressResponse getBulkProgress(
+            String userEmail,
+            String from,
+            String to) {
 
         User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         List<Habit> habits = habitRepository.findByUserAndActiveTrue(user);
 
         if (habits.isEmpty()) {
             return BulkHabitProgressResponse.builder()
-                    .startDate(LocalDate.now().toString())
-                    .endDate(LocalDate.now().toString())
                     .habits(List.of())
                     .build();
         }
+
+        LocalDate today = LocalDate.now();
 
         LocalDate globalStart = habits.stream()
                 .map(h -> h.getCreatedAt().toLocalDate())
                 .min(LocalDate::compareTo)
                 .get();
 
-        LocalDate end = LocalDate.now();
+        LocalDate start = parseDate(from, globalStart);
+        LocalDate end = parseDate(to, today);
+
+        if (start.isAfter(end)) {
+            throw new BadRequestException("'from' date cannot be after 'to' date");
+        }
+
+        start = start.isBefore(globalStart) ? globalStart : start;
+        end = end.isAfter(today) ? today : end;
 
         List<HabitTimelineResponse> timelines = new ArrayList<>();
 
         for (Habit habit : habits) {
 
             HabitProgressResponse single =
-                    getProgress(habit.getId(), userEmail);
+                    getProgress(habit.getId(), userEmail,
+                            start.toString(), end.toString());
 
             timelines.add(
                     HabitTimelineResponse.builder()
@@ -142,12 +172,16 @@ public class HabitProgressService {
         }
 
         return BulkHabitProgressResponse.builder()
-                .startDate(globalStart.toString())
+                .startDate(start.toString())
                 .endDate(end.toString())
                 .habits(timelines)
                 .build();
     }
 
+    
+    private LocalDate parseDate(String value, LocalDate defaultValue) {
+        return value == null ? defaultValue : LocalDate.parse(value);
+    }
 
 }
 
