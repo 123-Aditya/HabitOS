@@ -1,5 +1,6 @@
 package com.habit.tracker.progress;
 
+import com.habit.tracker.progress.dto.BulkHabitProgressResponse;
 import com.habit.tracker.progress.dto.HabitProgressResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,7 @@ public class HabitProgressController {
         return progressService.getProgress(habitId, email);
     }
     
+    
     @GetMapping("/progress")
     public HabitProgressResponse getHabitProgressByName(
             @RequestParam String name) {
@@ -38,6 +40,20 @@ public class HabitProgressController {
                 .getName();
 
         return progressService.getProgressByName(name, email);
+    }
+    
+    // This API is read-heavy and compute-heavy.
+    // Future Optimizations (When Needed)
+    // Batch fetch entries, Batch fetch skip rules, Cache bulk response
+    @GetMapping("/progress/bulk")
+    public BulkHabitProgressResponse getAllHabitsProgress() {
+
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
+        return progressService.getBulkProgress(email);
     }
 
 }

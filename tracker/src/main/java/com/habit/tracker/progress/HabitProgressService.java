@@ -100,6 +100,54 @@ public class HabitProgressService {
 
         return getProgress(habit.getId(), userEmail);
     }
+    
+    
+    public BulkHabitProgressResponse getBulkProgress(String userEmail) {
+
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
+
+        List<Habit> habits = habitRepository.findByUserAndActiveTrue(user);
+
+        if (habits.isEmpty()) {
+            return BulkHabitProgressResponse.builder()
+                    .startDate(LocalDate.now().toString())
+                    .endDate(LocalDate.now().toString())
+                    .habits(List.of())
+                    .build();
+        }
+
+        LocalDate globalStart = habits.stream()
+                .map(h -> h.getCreatedAt().toLocalDate())
+                .min(LocalDate::compareTo)
+                .get();
+
+        LocalDate end = LocalDate.now();
+
+        List<HabitTimelineResponse> timelines = new ArrayList<>();
+
+        for (Habit habit : habits) {
+
+            HabitProgressResponse single =
+                    getProgress(habit.getId(), userEmail);
+
+            timelines.add(
+                    HabitTimelineResponse.builder()
+                            .habitId(single.getHabitId())
+                            .habitName(single.getHabitName())
+                            .progress(single.getProgress())
+                            .build()
+            );
+        }
+
+        return BulkHabitProgressResponse.builder()
+                .startDate(globalStart.toString())
+                .endDate(end.toString())
+                .habits(timelines)
+                .build();
+    }
+
 
 }
 
