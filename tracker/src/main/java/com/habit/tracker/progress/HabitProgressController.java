@@ -6,10 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Progress", description = "Habit progress & timelines")
+
 @RestController
 @RequestMapping("/api/habits")
 @RequiredArgsConstructor
@@ -18,8 +16,7 @@ public class HabitProgressController {
 
     private final HabitProgressService progressService;
 
-    @Operation(summary = "Get habit progress timeline",
-            description = "Returns day-wise progress for a habit")
+    
     @GetMapping("/{habitId}/progress")
     public HabitProgressResponse getHabitProgress(
             @PathVariable Long habitId,

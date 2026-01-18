@@ -5,9 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Analytics", description = "Weekly & monthly analytics")
+
 @RestController
 @RequestMapping("/api/analytics")
 @RequiredArgsConstructor

@@ -12,9 +12,8 @@ import com.habit.tracker.auth.dto.LoginRequest;
 import com.habit.tracker.auth.dto.RegisterRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "Auth", description = "Authentication APIs")
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
