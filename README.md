@@ -261,7 +261,7 @@ Areas of improvement
 ## 💡 Key Findings
 
   - When using Redis with JSON serialization, cached objects must have either a default constructor or a Jackson creator, otherwise deserialization fails on cache hits.
-  - 
+  - Habit IDs are the canonical identifiers. For usability, we also expose name-based lookup APIs that internally resolve IDs, while keeping core logic ID-driven.
 
 ---
 ## ✍️ Author
