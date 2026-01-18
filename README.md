@@ -264,6 +264,278 @@ Areas of improvement
   - Habit IDs are the canonical identifiers. For usability, we also expose name-based lookup APIs that internally resolve IDs, while keeping core logic ID-driven.
 
 ---
+## 📜 API Documentation
+🔐 Authentication APIs
+1️⃣ Register User
+
+POST /api/auth/register
+
+Request Body
+
+{
+  "name": "Test",
+  "email": "test@example.com",
+  "password": "test123"
+}
+
+Response
+
+{
+  "token": "jwt-token"
+}
+
+---
+
+2️⃣ Login User
+
+POST /api/auth/login
+
+Request Body
+
+{
+  "email": "example@example.com",
+  "password": "example1234"
+}
+
+Response
+
+{
+  "token": "jwt-token"
+}
+
+---
+🧠 Habit Management APIs
+3️⃣ Create Habit
+
+POST /api/habits
+
+Request Body
+
+{
+  "name": "Exercise",
+  "description": "Daily workout",
+  "frequency": "DAILY",
+  "targetCount": 1
+}
+
+---
+
+4️⃣ Get All Habits
+
+GET /api/habits
+
+Response
+
+[
+  {
+    "id": 1,
+    "name": "Exercise",
+    "frequency": "DAILY",
+    "active": true
+  }
+]
+
+---
+5️⃣ Update Habit
+
+PUT /api/habits/{habitId}
+
+Request Body
+
+{
+  "name": "Workout",
+  "description": "Gym workout",
+  "targetCount": 1
+}
+
+---
+
+6️⃣ Deactivate Habit
+
+DELETE /api/habits/{habitId}
+
+📌 Habit is soft-deleted (marked inactive).
+
+---
+
+📝 Habit Entry APIs
+7️⃣ Mark Habit as DONE
+
+POST /api/habits/{habitId}/entries
+
+Request Body
+
+{
+  "date": "2026-01-10",
+  "status": "DONE"
+}
+
+---
+
+8️⃣ Skip Habit
+
+POST /api/habits/{habitId}/entries
+
+Request Body
+
+{
+  "date": "2026-01-10",
+  "status": "SKIPPED"
+}
+
+---
+
+🚫 Skip Rules & Holidays
+9️⃣ Add Skip Rule (Weekly)
+
+POST /api/habits/{habitId}/skip-rules
+
+Request Body
+
+{
+  "dayOfWeek": "SUNDAY"
+}
+
+---
+
+🔟 Add Holiday (Specific Date)
+
+POST /api/habits/{habitId}/skip-rules/date
+
+Request Body
+
+{
+  "date": "2026-01-26"
+}
+
+---
+
+🔥 Streak APIs
+1️⃣1️⃣ Get Habit Streak
+
+GET /api/streaks/{habitId}
+
+Response
+
+{
+  "habitId": 1,
+  "currentStreak": 5,
+  "longestStreak": 12
+}
+
+---
+
+📊 Progress APIs
+1️⃣2️⃣ Get Habit Progress (Timeline)
+
+GET
+/api/habits/{habitId}/progress
+
+Optional query params:
+?from=2026-01-01&to=2026-01-31
+
+Response
+
+{
+  "habitId": 1,
+  "habitName": "Exercise",
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-10",
+  "progress": [
+    { "date": "2026-01-01", "status": "DONE" },
+    { "date": "2026-01-02", "status": "MISSED" },
+    { "date": "2026-01-03", "status": "SKIP_RULE"}
+  ]
+}
+
+---
+
+1️⃣3️⃣ Get Habit Progress by Name
+
+GET
+/api/habits/progress?name=Exercise
+
+📌 Internally resolves habit ID.
+
+---
+
+1️⃣4️⃣ Bulk Progress (All Habits)
+
+GET
+/api/habits/progress/bulk
+
+Optional:
+?from=2026-01-01&to=2026-01-31
+
+Response
+
+{
+  "startDate": "2026-01-01",
+  "endDate": "2026-01-10",
+  "habits": [
+    {
+      "habitId": 1,
+      "habitName": "Exercise",
+      "progress": [...]
+    }
+  ]
+}
+
+---
+
+📈 Analytics APIs
+1️⃣5️⃣ Weekly Analytics
+
+GET
+/api/analytics/weekly
+
+Response
+
+{
+  "totalHabits": 3,
+  "completed": 18,
+  "skipped": 2,
+  "missed": 1,
+  "consistencyPercentage": 85
+}
+
+---
+
+1️⃣6️⃣ Monthly Analytics
+
+GET
+/api/analytics/monthly
+
+---
+
+📧 Email Reports
+1️⃣7️⃣ Weekly Email Summary (Auto)
+
+📌 Sent every week via scheduler:
+
+Consistency
+
+Streaks
+
+Completion %
+
+(No manual API trigger)
+
+---
+
+⚠️ Error Handling
+
+All errors follow a standard format:
+
+{
+  "timestamp": "2026-01-19T00:30:00",
+  "status": 400,
+  "error": "Bad Request",
+  "message": "Invalid date range",
+  "path": "/api/habits/1/progress"
+}
+
+---
 ## ✍️ Author
 
 Aditya Upadhyaya
