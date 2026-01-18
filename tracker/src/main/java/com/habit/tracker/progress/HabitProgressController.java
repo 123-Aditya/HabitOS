@@ -27,5 +27,18 @@ public class HabitProgressController {
 
         return progressService.getProgress(habitId, email);
     }
+    
+    @GetMapping("/progress")
+    public HabitProgressResponse getHabitProgressByName(
+            @RequestParam String name) {
+
+        String email = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+
+        return progressService.getProgressByName(name, email);
+    }
+
 }
 

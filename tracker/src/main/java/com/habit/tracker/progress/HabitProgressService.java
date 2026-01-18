@@ -83,5 +83,23 @@ public class HabitProgressService {
                 .progress(progressList)
                 .build();
     }
+    
+    public HabitProgressResponse getProgressByName(
+            String habitName,
+            String userEmail) {
+
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
+
+        Habit habit = habitRepository
+                .findByUserAndNameIgnoreCase(user, habitName)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Habit not found with name: " + habitName));
+
+        return getProgress(habit.getId(), userEmail);
+    }
+
 }
 
