@@ -2,15 +2,16 @@ package com.habit.tracker.habit;
 
 import com.habit.tracker.habit.dto.CreateHabitRequest;
 import com.habit.tracker.habit.dto.HabitResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+@Tag(name = "Habits", description = "Habit management APIs")
 @RestController
 @RequestMapping("/api/habits")
 @RequiredArgsConstructor
