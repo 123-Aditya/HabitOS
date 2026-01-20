@@ -293,8 +293,8 @@ POST /api/auth/login
 Request Body
 
 {
-  "email": "example@example.com",
-  "password": "example1234"
+  "email": "test@test.com",
+  "password": "test1234"
 }
 
 Response
