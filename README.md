@@ -266,9 +266,10 @@ Areas of improvement
 ---
 ## 📜 API Documentation
 🔐 Authentication APIs
+
 1️⃣ Register User
 
-POST /api/auth/register
+POST:  /api/auth/register
 
 Request Body
 
@@ -286,9 +287,10 @@ Response
 
 ---
 
+
 2️⃣ Login User
 
-POST /api/auth/login
+POST:  /api/auth/login
 
 Request Body
 
@@ -305,9 +307,10 @@ Response
 
 ---
 🧠 Habit Management APIs
+
 3️⃣ Create Habit
 
-POST /api/habits
+POST:  /api/habits
 
 Request Body
 
@@ -322,7 +325,7 @@ Request Body
 
 4️⃣ Get All Habits
 
-GET /api/habits
+GET:  /api/habits
 
 Response
 
@@ -336,9 +339,10 @@ Response
 ]
 
 ---
+
 5️⃣ Update Habit
 
-PUT /api/habits/{habitId}
+PUT:  /api/habits/{habitId}
 
 Request Body
 
@@ -352,16 +356,17 @@ Request Body
 
 6️⃣ Deactivate Habit
 
-DELETE /api/habits/{habitId}
+DELETE:  /api/habits/{habitId}
 
 📌 Habit is soft-deleted (marked inactive).
 
 ---
 
 📝 Habit Entry APIs
+
 7️⃣ Mark Habit as DONE
 
-POST /api/habits/{habitId}/entries
+POST:  /api/habits/{habitId}/entries
 
 Request Body
 
@@ -374,7 +379,7 @@ Request Body
 
 8️⃣ Skip Habit
 
-POST /api/habits/{habitId}/entries
+POST:  /api/habits/{habitId}/entries
 
 Request Body
 
@@ -386,9 +391,10 @@ Request Body
 ---
 
 🚫 Skip Rules & Holidays
+
 9️⃣ Add Skip Rule (Weekly)
 
-POST /api/habits/{habitId}/skip-rules
+POST:  /api/habits/{habitId}/skip-rules
 
 Request Body
 
@@ -400,7 +406,7 @@ Request Body
 
 🔟 Add Holiday (Specific Date)
 
-POST /api/habits/{habitId}/skip-rules/date
+POST:  /api/habits/{habitId}/skip-rules/date
 
 Request Body
 
@@ -411,9 +417,10 @@ Request Body
 ---
 
 🔥 Streak APIs
+
 1️⃣1️⃣ Get Habit Streak
 
-GET /api/streaks/{habitId}
+GET:  /api/streaks/{habitId}
 
 Response
 
@@ -426,12 +433,13 @@ Response
 ---
 
 📊 Progress APIs
+
 1️⃣2️⃣ Get Habit Progress (Timeline)
 
-GET
-/api/habits/{habitId}/progress
+GET:  /api/habits/{habitId}/progress
 
 Optional query params:
+
 ?from=2026-01-01&to=2026-01-31
 
 Response
@@ -452,8 +460,7 @@ Response
 
 1️⃣3️⃣ Get Habit Progress by Name
 
-GET
-/api/habits/progress?name=Exercise
+GET:  /api/habits/progress?name=Exercise
 
 📌 Internally resolves habit ID.
 
@@ -461,10 +468,10 @@ GET
 
 1️⃣4️⃣ Bulk Progress (All Habits)
 
-GET
-/api/habits/progress/bulk
+GET:  /api/habits/progress/bulk
 
 Optional:
+
 ?from=2026-01-01&to=2026-01-31
 
 Response
@@ -484,10 +491,10 @@ Response
 ---
 
 📈 Analytics APIs
+
 1️⃣5️⃣ Weekly Analytics
 
-GET
-/api/analytics/weekly
+GET:  /api/analytics/weekly
 
 Response
 
@@ -503,12 +510,12 @@ Response
 
 1️⃣6️⃣ Monthly Analytics
 
-GET
-/api/analytics/monthly
+GET:  /api/analytics/monthly
 
 ---
 
 📧 Email Reports
+
 1️⃣7️⃣ Weekly Email Summary (Auto)
 
 📌 Sent every week via scheduler:
