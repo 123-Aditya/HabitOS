@@ -1,8 +1,8 @@
 package com.habit.tracker.entry;
 
 import com.habit.tracker.habit.Habit;
+import com.habit.tracker.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.List;
@@ -17,6 +17,12 @@ public interface HabitEntryRepository
 
     List<HabitEntry> findByHabitOrderByEntryDateDesc(
             Habit habit
+    );
+    
+    List<HabitEntry> findByUserAndDateBetween(
+            User user,
+            LocalDate from,
+            LocalDate to
     );
 }
 
