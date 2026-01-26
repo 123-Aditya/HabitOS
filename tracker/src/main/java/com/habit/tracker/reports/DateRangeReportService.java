@@ -57,7 +57,7 @@ public class DateRangeReportService {
 
         // 4. Fetch entries in date range
         List<HabitEntry> entries =
-                habitEntryRepository.findByUserAndDateBetween(
+                habitEntryRepository.findByHabitUserAndEntryDateBetween(
                         user, startDate, endDate);
 
         // 5. Group entries by habitId

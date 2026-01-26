@@ -19,10 +19,11 @@ public interface HabitEntryRepository
             Habit habit
     );
     
-    List<HabitEntry> findByUserAndDateBetween(
+    List<HabitEntry> findByHabitUserAndEntryDateBetween(
             User user,
             LocalDate from,
             LocalDate to
     );
+
 }
 

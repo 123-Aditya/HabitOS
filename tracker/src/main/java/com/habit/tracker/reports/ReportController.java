@@ -1,11 +1,13 @@
 package com.habit.tracker.reports;
 
+import java.io.IOException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.habit.tracker.reports.dto.DateRangeReportResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -13,19 +15,33 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReportController {
 
-    private final DateRangeReportService reportService;
+    private final DateRangeReportService dateRangeReportService;
+    
+    private final CsvExportService csvExportService;
 
-    @GetMapping("/summary")
-    public DateRangeReportResponse getSummary(
+    @GetMapping(value = "/date-range/csv", produces = "text/csv")
+    public void exportDateRangeReportCsv(
             @RequestParam String from,
-            @RequestParam String to) {
+            @RequestParam String to,
+            HttpServletResponse response
+    ) throws IOException {
 
         String email = SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getName();
 
-        return reportService.generateSummary(email, from, to);
+        DateRangeReportResponse report =
+                dateRangeReportService.generateSummary(email, from, to);
+
+        response.setContentType("text/csv");
+        response.setHeader(
+                "Content-Disposition",
+                "attachment; filename=habit-report-" + from + "_to_" + to + ".csv"
+        );
+
+        csvExportService.writeDateRangeReport(response.getWriter(), report);
     }
+
 }
 
