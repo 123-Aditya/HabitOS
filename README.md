@@ -534,7 +534,7 @@ Completion %
 
 📌 Export Date-Range Analytics as CSV
 
-GET:  http://localhost:8080/api/reports/date-range/csv?from=2026-01-01&to=2026-01-22
+GET:  /api/reports/date-range/csv?from=2026-01-01&to=2026-01-22
 
 
 📤 Response:
@@ -547,9 +547,11 @@ The response triggers a file download in browsers and API tools.
 
 <img width="889" height="556" alt="Screenshot 2026-01-26 at 7 04 06 PM" src="https://github.com/user-attachments/assets/02408468-fdca-4814-a532-9514d616413e" />
 
-
-
+<br>
+<br>
 CSV file:
+<br>
+<br>
 
 <img width="965" height="403" alt="Screenshot 2026-01-26 at 7 04 11 PM" src="https://github.com/user-attachments/assets/53851a82-0d31-4910-9cd1-d89ed23bf233" />
 
