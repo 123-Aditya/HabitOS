@@ -1,0 +1,14 @@
+.sidebar {
+  padding: 16px;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+mat-icon {
+  margin-right: 8px;
+}

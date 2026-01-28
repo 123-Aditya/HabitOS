@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-navbar',
-  imports: [],
+  standalone: true,
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css'],
+  imports: [MatToolbarModule, MatIconModule]
 })
 export class NavbarComponent {
-
+  @Output() menuToggle = new EventEmitter<void>();
 }
+
