@@ -6,6 +6,7 @@ import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-main-layout',
@@ -19,7 +20,8 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
     MatListModule,
     RouterModule,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    RouterOutlet
   ]
 })
 export class MainLayoutComponent {}
