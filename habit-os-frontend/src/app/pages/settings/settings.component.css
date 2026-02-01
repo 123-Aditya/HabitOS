@@ -1,0 +1,17 @@
+.settings-container {
+  padding: 24px;
+}
+
+.settings-card {
+  max-width: 500px;
+  padding: 24px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+h2 {
+  margin-bottom: 16px;
+  font-weight: 500;
+}
