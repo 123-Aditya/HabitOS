@@ -3,10 +3,11 @@
 }
 
 .logo {
-  text-align: center;
+  text-align: left;
   margin-bottom: 24px;
   font-size: 20px;
   font-weight: bold;
+  color: #000; 
 }
 
 mat-icon {
