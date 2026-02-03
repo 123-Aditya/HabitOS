@@ -1,24 +1,35 @@
-<mat-tab label="Profile">
-  <mat-card class="settings-card" *ngIf="!loading">
+<mat-tab-group>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="profile.name">
-    </mat-form-field>
+  <mat-tab label="Profile">
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Email</mat-label>
-      <input matInput [value]="profile.email" disabled>
-    </mat-form-field>
+    <mat-card class="settings-card" *ngIf="!loading">
 
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="saveProfile()">
-      Save Profile
-    </button>
+        <br>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="profile.name">
+      </mat-form-field>
 
-  </mat-card>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput [value]="profile.email" disabled>
+      </mat-form-field>
 
-  <p *ngIf="loading">Loading profile...</p>
-</mat-tab>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="saveProfile()">
+        Save Profile
+      </button>
+
+    </mat-card>
+
+    <p *ngIf="loading">Loading profile...</p>
+
+  </mat-tab>
+
+  <mat-tab label="Preferences">
+    <p style="padding:16px;">Preferences coming soon…</p>
+  </mat-tab>
+
+</mat-tab-group>
