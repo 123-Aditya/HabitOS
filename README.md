@@ -570,6 +570,16 @@ All errors follow a standard format:
 }
 
 ---
+
+Frontend (User Interface)
+
+- User login
+- Interactive UI
+- Multiple menus to navigate for seamless experience
+- Built using Angular framework
+
+---
+
 ## ✍️ Author
 
 Aditya Upadhyaya
