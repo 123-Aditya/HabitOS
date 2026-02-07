@@ -4,10 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-interface LoginResponse {
-  token: string;
-}
-
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -17,31 +13,32 @@ interface LoginResponse {
 })
 export class LoginComponent {
 
-  email = '';
-  password = '';
+  credentials = {
+    email: '',
+    password: ''
+  };
+
+  loading = false;
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) {}
 
-  login(): void {
-    const credentials = {
-      email: this.email,
-      password: this.password
-    };
+  login() {
+    this.loading = true;
 
-    // 🔥 THIS is where your code goes
-    this.http.post<LoginResponse>(
+    this.http.post<any>(
       'http://localhost:8080/api/auth/login',
-      credentials
+      this.credentials
     ).subscribe({
-      next: (res) => {
-        localStorage.setItem('token', res.token); // ✅ store JWT
-        this.router.navigate(['/dashboard']);     // ✅ redirect
+      next: res => {
+        localStorage.setItem('token', res.token);
+        this.router.navigate(['/dashboard']);
       },
       error: () => {
-        alert('Invalid email or password');
+        alert('Invalid credentials');
+        this.loading = false;
       }
     });
   }

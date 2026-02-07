@@ -1,19 +1,44 @@
-<form (ngSubmit)="login()">
-  <input
-    type="email"
-    placeholder="Email"
-    [(ngModel)]="email"
-    name="email"
-    required
-  />
+<div class="login-wrapper">
+  <div class="login-card">
 
-  <input
-    type="password"
-    placeholder="Password"
-    [(ngModel)]="password"
-    name="password"
-    required
-  />
+    <h1 class="app-title">🪴 Habit OS</h1>
+    <p class="subtitle">Build habits. Track progress.</p>
 
-  <button type="submit">Login</button>
-</form>
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+
+      <div class="form-group">
+        <label>Email</label>
+        <input
+          type="email"
+          required
+          name="email"
+          [(ngModel)]="credentials.email"
+          placeholder="you@example.com" />
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          required
+          name="password"
+          [(ngModel)]="credentials.password"
+          placeholder="••••••••" />
+      </div>
+
+      <button
+        class="login-btn"
+        type="submit"
+        [disabled]="loading || !loginForm.valid">
+
+        {{ loading ? 'Logging in…' : 'Login' }}
+      </button>
+
+    </form>
+
+    <p class="footer-text">
+      Start your habit journey 🌱
+    </p>
+
+  </div>
+</div>
