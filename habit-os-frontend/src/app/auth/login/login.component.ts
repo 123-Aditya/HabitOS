@@ -13,32 +13,60 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  credentials = {
-    email: '',
-    password: ''
-  };
+  email = '';
+  password = '';
 
   loading = false;
+  errorMessage = '';
 
   constructor(
     private http: HttpClient,
     private router: Router
   ) {}
 
-  login() {
+  get isEmailValid(): boolean {
+    return (
+      this.email.endsWith('@gmail.com') ||
+      this.email.endsWith('@yahoo.com')
+    );
+  }
+
+  get isPasswordValid(): boolean {
+    return this.password.length >= 8;
+  }
+
+  get isFormValid(): boolean {
+    return this.isEmailValid && this.isPasswordValid;
+  }
+
+  login(): void {
+
+    if (!this.isFormValid) 
+      return;
+
+    this.errorMessage = '';
     this.loading = true;
 
-    this.http.post<any>(
-      'http://localhost:8080/api/auth/login',
-      this.credentials
-    ).subscribe({
+    this.http.post<any>('http://localhost:8080/api/auth/login', {
+      email: this.email,
+      password: this.password
+    }).subscribe({
       next: res => {
         localStorage.setItem('token', res.token);
+        this.loading = false;
         this.router.navigate(['/dashboard']);
       },
-      error: () => {
-        alert('Invalid credentials');
+      error: err => {
         this.loading = false;
+
+        // Error messages
+        if (err.status === 401) {
+          this.errorMessage = 'Invalid email or password';
+        } else if (err.status === 0) {
+          this.errorMessage = 'Login failed.Please try again after some time.';
+        } else {
+          this.errorMessage = 'Something went wrong. Try again.';
+        }
       }
     });
   }

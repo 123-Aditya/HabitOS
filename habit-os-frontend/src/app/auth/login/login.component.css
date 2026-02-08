@@ -88,3 +88,19 @@
   font-size: 13px;
   color: #888;
 }
+
+.error-box {
+  margin: 12px 0;
+  padding: 10px 12px;
+  background: #fdecea;
+  color: #b71c1c;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #f5c6cb;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

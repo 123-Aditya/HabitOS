@@ -4,37 +4,48 @@
     <h1 class="app-title">🪴 Habit OS</h1>
     <p class="subtitle">Build habits. Track progress.</p>
 
-    <form (ngSubmit)="login()" #loginForm="ngForm">
+    <!-- Email -->
+    <div class="form-group">
+      <label>Email</label>
+      <input
+        type="email"
+        placeholder="Email"
+        [(ngModel)]="email"
+        [disabled]="loading"
+      />
 
-      <div class="form-group">
-        <label>Email</label>
-        <input
-          type="email"
-          required
-          name="email"
-          [(ngModel)]="credentials.email"
-          placeholder="you@example.com" />
+      <div *ngIf="email && !isEmailValid" class="error-box">
+        ⚠️ Email not valid. Please enter valid email address.
       </div>
+    </div>
 
-      <div class="form-group">
-        <label>Password</label>
-        <input
-          type="password"
-          required
-          name="password"
-          [(ngModel)]="credentials.password"
-          placeholder="••••••••" />
+    <!-- Password -->
+    <div class="form-group">
+      <label>Password</label>
+      <input
+        type="password"
+        placeholder="Password"
+        [(ngModel)]="password"
+        [disabled]="loading"
+      />
+
+      <div *ngIf="password && !isPasswordValid" class="error-box">
+        ⚠️ Please enter valid password.
       </div>
+    </div>
 
-      <button
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="error-box">
+      ⚠️ {{ errorMessage }}
+    </div>
+
+    <!-- Button -->
+    <button
         class="login-btn"
-        type="submit"
-        [disabled]="loading || !loginForm.valid">
-
-        {{ loading ? 'Logging in…' : 'Login' }}
-      </button>
-
-    </form>
+        (click)="login()"
+        [disabled]="loading || !isFormValid">
+        {{ loading ? 'Logging in...' : 'Login' }}
+    </button>
 
     <p class="footer-text">
       Start your habit journey 🌱
