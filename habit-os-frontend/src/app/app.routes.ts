@@ -11,10 +11,10 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'habits', component: HabitsComponent },
-      { path: 'reports', component: ReportsComponent },
-      { path: 'settings', component: SettingsComponent }
+      { path: 'dashboard', component: DashboardComponent, title: 'Dashboard | Habit OS' },
+      { path: 'habits', component: HabitsComponent, title: 'Habits | Habit OS' },
+      { path: 'reports', component: ReportsComponent, title: 'Reports | Habit OS' },
+      { path: 'settings', component: SettingsComponent, title: 'Settings | Habit OS' }
     ]
   }
 ];

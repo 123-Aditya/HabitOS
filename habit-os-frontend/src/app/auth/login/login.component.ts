@@ -27,7 +27,9 @@ export class LoginComponent {
   get isEmailValid(): boolean {
     return (
       this.email.endsWith('@gmail.com') ||
-      this.email.endsWith('@yahoo.com')
+      this.email.endsWith('@yahoo.com') ||
+      this.email.endsWith('@outlook.com') ||
+      this.email.endsWith('@test.com')
     );
   }
 
