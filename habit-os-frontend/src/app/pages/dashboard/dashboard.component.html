@@ -1,1 +1,26 @@
-<p>dashboard works!</p>
+<div class="dashboard-wrapper">
+
+  <h1>👋 Welcome back</h1>
+
+  <div *ngIf="loading">Loading dashboard...</div>
+
+  <div class="cards" *ngIf="!loading">
+
+    <div class="card">
+      <h3>{{ totalHabits }}</h3>
+      <p>Active Habits</p>
+    </div>
+
+    <div class="card">
+      <h3>{{ totalEntries }}</h3>
+      <p>Total Entries Today</p>
+    </div>
+
+    <div class="card">
+      <h3>{{ data?.startDate }}</h3>
+      <p>Tracking Since</p>
+    </div>
+
+  </div>
+
+</div>
