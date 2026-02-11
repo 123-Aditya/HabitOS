@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
 
   totalHabits = 0;
   totalEntries = 0;
+  completionPercentage = 0;
 
   ngOnInit(): void {
     const today = new Date().toISOString().split('T')[0];
@@ -29,12 +30,17 @@ export class DashboardComponent implements OnInit {
       this.data = res;
 
       if (res?.habits) {
-        this.totalHabits = res.habits.length;
+          this.totalHabits = res.habits.length;
 
-        this.totalEntries = res.habits.reduce(
-          (sum: number, h: any) => sum + (h.progress?.length || 0),
-          0
-        );
+          this.totalEntries = res.habits.reduce(
+            (sum: number, h: any) => sum + (h.progress?.length || 0),
+              0
+          );
+
+          if (this.totalHabits > 0) {
+            this.completionPercentage =
+            Math.round((this.totalEntries / this.totalHabits) * 100);
+          }
       }
 
       this.loading = false;

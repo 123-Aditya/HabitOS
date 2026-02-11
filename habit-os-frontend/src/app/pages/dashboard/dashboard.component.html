@@ -1,24 +1,60 @@
 <div class="dashboard-wrapper">
 
-  <h1>👋 Welcome back</h1>
+  <div class="dashboard-header">
+    <h1>👋 Welcome back, Aditya</h1>
+    <p>Here’s your habit progress overview</p>
+  </div>
 
-  <div *ngIf="loading">Loading dashboard...</div>
+  <div *ngIf="loading" class="loading">
+    Loading dashboard...
+  </div>
 
-  <div class="cards" *ngIf="!loading">
+  <div *ngIf="!loading">
 
-    <div class="card">
-      <h3>{{ totalHabits }}</h3>
-      <p>Active Habits</p>
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+
+      <div class="stat-card">
+        <div class="stat-value">{{ totalHabits }}</div>
+        <div class="stat-label">Active Habits</div>
+      </div>
+
+      <div class="stat-card highlight">
+        <div class="stat-value">{{ completionPercentage }}%</div>
+        <div class="stat-label">Today's Completion</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-value">{{ totalEntries }}</div>
+        <div class="stat-label">Entries Logged Today</div>
+      </div>
+
     </div>
 
-    <div class="card">
-      <h3>{{ totalEntries }}</h3>
-      <p>Total Entries Today</p>
-    </div>
+    <!-- Habit Progress List -->
+    <div class="habit-section" *ngIf="data?.habits?.length">
 
-    <div class="card">
-      <h3>{{ data?.startDate }}</h3>
-      <p>Tracking Since</p>
+      <h2>Your Habits</h2>
+
+      <div class="habit-card" *ngFor="let habit of data.habits">
+
+        <div class="habit-header">
+          <h3>{{ habit.habitName }}</h3>
+        </div>
+
+        <div class="progress-bar">
+          <div
+            class="progress-fill"
+            [style.width.%]="habit.progress?.length ? 100 : 0">
+          </div>
+        </div>
+
+        <div class="progress-label">
+          {{ habit.progress?.length ? 'Completed Today ✅' : 'Not Completed ❌' }}
+        </div>
+
+      </div>
+
     </div>
 
   </div>
