@@ -2,8 +2,30 @@
 
   <div class="dashboard-header">
     <h1>👋 Welcome back, Aditya</h1>
-    <p>Here’s your habit progress overview</p>
+    <br>
   </div>
+
+  <!-- Date Filter Section -->
+<div class="filter-section">
+
+  <div class="date-group">
+    <label>From</label>
+    <input type="date" [(ngModel)]="fromDate">
+  </div>
+
+  <div class="date-group">
+    <label>To</label>
+    <input type="date" [(ngModel)]="toDate">
+  </div>
+
+  <button
+    class="apply-btn"
+    (click)="loadDashboard()"
+    [disabled]="!fromDate || !toDate">
+    Apply
+  </button>
+
+</div>
 
   <div *ngIf="loading" class="loading">
     Loading dashboard...
