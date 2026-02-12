@@ -1,0 +1,56 @@
+.habits-wrapper {
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #2e7d32;
+}
+
+/* Add Card */
+.add-card {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.add-card input,
+.add-card select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.add-card button {
+  background: #66bb6a;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Habit List */
+.habit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.habit-card {
+  background: white;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.habit-actions button {
+  margin-left: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+}

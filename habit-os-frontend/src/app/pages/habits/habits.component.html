@@ -1,1 +1,51 @@
-<p>habits works!</p>
+<div class="habits-wrapper">
+
+  <h1>💡 My Habits</h1>
+
+  <!-- Add Habit Card -->
+  <div class="add-card">
+
+    <input
+      type="text"
+      placeholder="Habit name"
+      [(ngModel)]="newHabit.name"
+    />
+
+    <select [(ngModel)]="newHabit.frequency">
+      <option value="DAILY">Daily</option>
+      <option value="WEEKLY">Weekly</option>
+      <option value="MONTHLY">Monthly</option>
+    </select>
+
+    <input
+      type="number"
+      min="1"
+      [(ngModel)]="newHabit.targetCount"
+    />
+
+    <button (click)="addHabit()">Add Habit</button>
+
+  </div>
+
+  <!-- Habits List -->
+  <div *ngIf="loading">Loading habits...</div>
+
+  <div class="habit-list" *ngIf="!loading">
+
+    <div class="habit-card" *ngFor="let habit of habits">
+
+      <div class="habit-info">
+        <h3>{{ habit.name }}</h3>
+        <p>{{ habit.frequency }} • Target: {{ habit.targetCount }}</p>
+      </div>
+
+      <div class="habit-actions">
+        <button (click)="completeHabit(habit.id)">✔</button>
+        <button (click)="deleteHabit(habit.id)">🗑</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
