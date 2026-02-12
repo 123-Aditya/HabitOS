@@ -24,6 +24,8 @@ export class DashboardComponent implements OnInit {
   fromDate!: string;
   toDate!: string;
 
+  summary: any = null;
+
   ngOnInit(): void {
       const today = new Date().toISOString().split('T')[0];
 
@@ -42,32 +44,57 @@ loadDashboard(): void {
 
   this.http.get<any>(
     `http://localhost:8080/api/habits/progress/bulk?from=${this.fromDate}&to=${this.toDate}`
-  ).subscribe({
-    next: (res) => {
-      this.data = res;
+    ).subscribe({
+      next: (res) => {
 
-      if (res?.habits) {
-        this.totalHabits = res.habits.length;
-        this.totalEntries = res.habits.reduce(
-          (sum: number, h: any) => sum + (h.progress?.length || 0),
-          0
-        );
+    console.log("API RESPONSE:", res);
 
-        if (this.totalHabits > 0) {
-          this.completionPercentage =
-            Math.round((this.totalEntries / this.totalHabits) * 100);
-        } else {
-          this.completionPercentage = 0;
+    const habits = res.habits || [];
+
+    const today = new Date().toISOString().split('T')[0];
+
+    let totalExpected = 0;
+    let totalCompleted = 0;
+    let todayCompleted = 0;
+
+    habits.forEach((habit: any) => {
+
+      totalExpected += habit.progress.length;
+
+      habit.progress.forEach((entry: any) => {
+
+        if (entry.status === 'COMPLETED') {
+          totalCompleted++;
+
+          if (entry.date === today) {
+            todayCompleted++;
+          }
         }
-      }
 
-      this.loading = false;
-    },
-    error: (err) => {
-      console.error(err);
-      this.loading = false;
-    }
-  });
+      });
+    });
+
+    const completionPercentage =
+      totalExpected === 0
+        ? 0
+        : Math.round((totalCompleted / totalExpected) * 100);
+
+    this.summary = {
+      totalHabits: habits.length,
+      totalDays: habits[0]?.progress?.length || 0,
+      overallCompletionPercentage: completionPercentage,
+      todayCompleted: todayCompleted
+    };
+
+    console.log("Calculated Summary:", this.summary);
+
+    this.loading = false;
+  },
+  error: (err) => {
+    console.error("Dashboard API Error:", err);
+    this.loading = false;
+  }
+});
 }
 
 }
