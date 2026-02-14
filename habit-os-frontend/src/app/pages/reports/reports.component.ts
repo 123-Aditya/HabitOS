@@ -20,6 +20,9 @@ export class ReportsComponent {
   loading = false;
   reportData: any = null;
 
+  weeklyAnalytics: any = null;
+  monthlyAnalytics: any = null;
+
   loadReport() {
 
     if (!this.fromDate || !this.toDate) return;
@@ -71,4 +74,52 @@ export class ReportsComponent {
       habits
     };
   }
+
+loadWeeklyAnalytics() {
+
+  this.loading = true;
+
+  this.http.get<any>(
+    'http://localhost:8080/api/analytics/weekly'
+  ).subscribe({
+    next: res => {
+      console.log("WEEKLY:", res);
+      this.weeklyAnalytics = res;
+      this.loading = false;
+    },
+    error: err => {
+      console.error("Weekly analytics error:", err);
+      this.loading = false;
+    }
+  });
+}
+
+loadMonthlyAnalytics() {
+
+  this.loading = true;
+
+  this.http.get<any>(
+    'http://localhost:8080/api/analytics/monthly'
+  ).subscribe({
+    next: res => {
+      console.log("MONTHLY:", res);
+      this.monthlyAnalytics = res;
+      this.loading = false;
+    },
+    error: err => {
+      console.error("Monthly analytics error:", err);
+      this.loading = false;
+    }
+  });
+}
+
+downloadCSV() {
+
+  if (!this.fromDate || !this.toDate) return;
+
+  const url =
+    `http://localhost:8080/api/reports/date-range/csv?from=${this.fromDate}&to=${this.toDate}`;
+
+  window.open(url, '_blank');
+}
 }

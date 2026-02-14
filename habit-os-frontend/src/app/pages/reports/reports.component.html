@@ -1,23 +1,82 @@
 <div class="reports-wrapper">
 
-  <h1>📊 Habit Reports</h1>
+  <h1 class="page-title">📊 Habit Reports</h1>
 
-  <div class="filters">
-    <input type="date" [(ngModel)]="fromDate">
-    <input type="date" [(ngModel)]="toDate">
-    <button (click)="loadReport()">Generate Report</button>
+  <!-- ================= ANALYTICS SECTION ================= -->
+  <div class="analytics-grid">
+
+    <div class="analytics-card" *ngIf="weeklyAnalytics">
+      <h3>📅 Weekly</h3>
+      <p class="big">{{ weeklyAnalytics.consistencyPercentage }}%</p>
+      <div class="small-stats">
+        <span>✅ {{ weeklyAnalytics.completed }}</span>
+        <span>⚠ {{ weeklyAnalytics.skipped }}</span>
+        <span>❌ {{ weeklyAnalytics.missed }}</span>
+      </div>
+    </div>
+
+    <div class="analytics-card" *ngIf="monthlyAnalytics">
+      <h3>🗓 Monthly</h3>
+      <p class="big">{{ monthlyAnalytics.consistencyPercentage }}%</p>
+      <div class="small-stats">
+        <span>✅ {{ monthlyAnalytics.completed }}</span>
+        <span>⚠ {{ monthlyAnalytics.skipped }}</span>
+        <span>❌ {{ monthlyAnalytics.missed }}</span>
+      </div>
+    </div>
+
+    <div class="analytics-actions">
+      <button class="primary-btn" (click)="loadWeeklyAnalytics()">
+        Load Weekly
+      </button>
+
+      <button class="primary-btn light" (click)="loadMonthlyAnalytics()">
+        Load Monthly
+      </button>
+    </div>
+
   </div>
 
-  <div *ngIf="loading">Loading report...</div>
+  <!-- ================= DATE FILTER CARD ================= -->
+  <div class="filter-card">
 
-  <div *ngIf="reportData" class="report-cards">
+    <div class="date-group">
+      <label>From</label>
+      <input type="date" [(ngModel)]="fromDate">
+    </div>
+
+    <div class="date-group">
+      <label>To</label>
+      <input type="date" [(ngModel)]="toDate">
+    </div>
+
+    <button class="primary-btn"
+            (click)="loadReport()">
+      Generate Report
+    </button>
+
+    <button class="secondary-btn"
+            (click)="downloadCSV()">
+      Export CSV
+    </button>
+
+  </div>
+
+  <!-- ================= REPORT GRID ================= -->
+  <div *ngIf="loading" class="loading">
+    Loading report...
+  </div>
+
+  <div *ngIf="reportData" class="report-grid">
 
     <div class="report-card"
          *ngFor="let habit of reportData.habits">
 
       <h3>{{ habit.habitName }}</h3>
 
-      <p>Completion: {{ habit.completionPercentage }}%</p>
+      <p class="percentage">
+        {{ habit.completionPercentage }}%
+      </p>
 
       <div class="progress-bar">
         <div class="progress-fill"
