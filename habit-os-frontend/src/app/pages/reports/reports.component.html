@@ -1,1 +1,37 @@
-<p>reports works!</p>
+<div class="reports-wrapper">
+
+  <h1>📊 Habit Reports</h1>
+
+  <div class="filters">
+    <input type="date" [(ngModel)]="fromDate">
+    <input type="date" [(ngModel)]="toDate">
+    <button (click)="loadReport()">Generate Report</button>
+  </div>
+
+  <div *ngIf="loading">Loading report...</div>
+
+  <div *ngIf="reportData" class="report-cards">
+
+    <div class="report-card"
+         *ngFor="let habit of reportData.habits">
+
+      <h3>{{ habit.habitName }}</h3>
+
+      <p>Completion: {{ habit.completionPercentage }}%</p>
+
+      <div class="progress-bar">
+        <div class="progress-fill"
+             [style.width.%]="habit.completionPercentage">
+        </div>
+      </div>
+
+      <div class="stats">
+        <span>✅ {{ habit.completed }}</span>
+        <span>❌ {{ habit.missed }}</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
