@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Chart, ChartConfiguration, registerables } from 'chart.js';
+
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-reports',
@@ -13,13 +16,12 @@ import { HttpClient } from '@angular/common/http';
 export class ReportsComponent {
 
   constructor(private http: HttpClient) {}
-
+  weeklyChart: any;
+  monthlyChart: any;
   fromDate: string = '';
   toDate: string = '';
-
   loading = false;
   reportData: any = null;
-
   weeklyAnalytics: any = null;
   monthlyAnalytics: any = null;
 
@@ -76,22 +78,16 @@ export class ReportsComponent {
   }
 
 loadWeeklyAnalytics() {
-
-  this.loading = true;
-
-  this.http.get<any>(
-    'http://localhost:8080/api/analytics/weekly'
-  ).subscribe({
-    next: res => {
-      console.log("WEEKLY:", res);
-      this.weeklyAnalytics = res;
-      this.loading = false;
-    },
-    error: err => {
-      console.error("Weekly analytics error:", err);
-      this.loading = false;
-    }
-  });
+  this.http.get<any>('http://localhost:8080/api/analytics/weekly')
+    .subscribe({
+      next: (res) => {
+        this.weeklyAnalytics = res;
+        this.renderWeeklyChart(res);
+      },
+      error: (err) => {
+        console.error('Weekly analytics error:', err);
+      }
+    });
 }
 
 loadMonthlyAnalytics() {
@@ -122,4 +118,44 @@ downloadCSV() {
 
   window.open(url, '_blank');
 }
+
+renderWeeklyChart(data: any) {
+
+  if (this.weeklyChart) {
+    this.weeklyChart.destroy();
+  }
+
+  const config: ChartConfiguration = {
+    type: 'doughnut',
+    data: {
+      labels: ['Completed', 'Skipped', 'Missed'],
+      datasets: [{
+        data: [
+          data.completed,
+          data.skipped,
+          data.missed
+        ],
+        backgroundColor: [
+          '#4CAF50',
+          '#FFC107',
+          '#F44336'
+        ]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  };
+
+  this.weeklyChart = new Chart(
+    'weeklyChartCanvas',
+    config
+  );
+}
+
 }

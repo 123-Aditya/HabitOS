@@ -155,3 +155,8 @@
   font-size: 14px;
   color: #777;
 }
+
+.chart-container {
+  margin-top: 20px;
+  max-width: 400px;
+}

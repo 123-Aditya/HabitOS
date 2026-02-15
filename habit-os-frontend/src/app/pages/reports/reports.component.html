@@ -13,6 +13,9 @@
         <span>⚠ {{ weeklyAnalytics.skipped }}</span>
         <span>❌ {{ weeklyAnalytics.missed }}</span>
       </div>
+      <div class="chart-container">
+        <canvas id="weeklyChartCanvas"></canvas>
+      </div>
     </div>
 
     <div class="analytics-card" *ngIf="monthlyAnalytics">
@@ -30,7 +33,7 @@
         Load Weekly
       </button>
 
-      <button class="primary-btn light" (click)="loadMonthlyAnalytics()">
+      <button class="primary-btn" (click)="loadMonthlyAnalytics()">
         Load Monthly
       </button>
     </div>
