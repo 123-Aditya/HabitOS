@@ -22,7 +22,7 @@ Tech stack:
 
 - Email: Spring Mail
 
-- Caching: Redis (later)
+- Caching: Redis
 
 - Docker: Later (final phase)
 
@@ -577,6 +577,17 @@ Frontend (User Interface)
 - Interactive UI
 - Multiple menus to navigate for seamless experience
 - Built using Angular framework
+
+UI screens:
+
+<img width="1570" height="737" alt="Screenshot 2026-02-16 at 11 11 16 PM (2)" src="https://github.com/user-attachments/assets/c31f430a-f6fe-4dd7-8407-5a6c1ac17990" />
+
+<img width="1558" height="709" alt="Screenshot 2026-02-16 at 11 13 59 PM (2)" src="https://github.com/user-attachments/assets/e7818d54-b69f-4521-b843-2e3165b626ee" />
+
+<img width="1569" height="579" alt="Screenshot 2026-02-16 at 11 14 10 PM (2)" src="https://github.com/user-attachments/assets/5d8a5194-9267-45cf-851c-43aa2d5af3f3" />
+
+<img width="1563" height="631" alt="Screenshot 2026-02-16 at 11 14 13 PM (2)" src="https://github.com/user-attachments/assets/1b8a30cb-a66e-48af-b9d3-6c4713138187" />
+
 
 ---
 
