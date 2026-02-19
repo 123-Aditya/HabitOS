@@ -151,7 +151,7 @@ Longest streak
 
 Missed days
 
-Motivation message 😄
+Motivation message 😄 [see if any online api we can use or hardcode the quotes and fetch randomly]
 
 ---
 
